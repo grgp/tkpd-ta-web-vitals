@@ -1,3 +1,7 @@
+Glitch.me links:
+Project: https://glitch.com/~grgp-tkpd-ta-web-vitals
+App: https://grgp-tkpd-ta-web-vitals.glitch.me/
+
 # Ejected React App
 
 3000 SSR
