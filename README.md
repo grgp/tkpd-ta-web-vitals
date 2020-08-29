@@ -1,5 +1,8 @@
 # Ejected React App
 
+3000 SSR
+3001 Client
+
 ![React App](https://i.imgur.com/ghC9fIF.png)
 
 A customized SSR boilerplate in inspired from CRA structure.

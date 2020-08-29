@@ -2,9 +2,10 @@ import React from 'react';
 import { useData } from 'react-isomorphic-data';
 import { Link } from 'react-router-dom';
 
+import LazyImage from '../../../components/LazyImage';
 import Header from '../../../components/Header';
 import RatingReview from '../../../components/RatingReview';
-import Footer from '../../../components/Footer';
+import LazyFooter from '../../../components/Footer/Lazy';
 
 const productWrapper = {
   display: 'flex',
@@ -21,9 +22,9 @@ const productCard = {
   marginBottom: '10px',
   boxShadow: '0 1px 6px 0 rgb(255 255 255 / 0.32)',
   borderRadius: '8px',
-	textDecoration: 'none',
-	color: '#fff',
-	cursor: 'pointer',
+  textDecoration: 'none',
+  color: '#fff',
+  cursor: 'pointer',
 };
 
 const productImg = {
@@ -42,12 +43,21 @@ const productName = {
 };
 
 const productPrice = {
-	color: '#ff5722',
-	fontSize: '14px',
+  color: '#ff5722',
+  fontSize: '14px',
   marginTop: '5px',
 };
 
 const { API_URL } = process.env;
+
+const getResizedImage = imageUrl => {
+  if (imageUrl) {
+    return `https://res.cloudinary.com/irfan-maulana-tkpd/image/fetch/c_fill,g_auto:face,h_200,fl_force_strip.progressive/f_webp/${encodeURIComponent(
+      imageUrl,
+    )}`;
+  }
+  return '';
+};
 
 function Home() {
   const { data, loading } = useData(`${API_URL}/products`, {}, { method: 'GET' }, { ssr: true });
@@ -60,7 +70,7 @@ function Home() {
           <div className="products" style={productWrapper}>
             {data.data.map(item => (
               <Link className="product" style={productCard} key={item.id} to={`/${item.id}`}>
-                <img className="product__img" style={productImg} src={item.image} alt={item.name}></img>
+                <LazyImage style={productImg} height="130px" src={getResizedImage(item.image)} alt={item.name} />
                 <div style={productInfo}>
                   <div style={productName}>{item.name}</div>
                   <div style={productPrice}>{item.price}</div>
@@ -71,7 +81,7 @@ function Home() {
           </div>
         )}
       </main>
-      <Footer />
+      <LazyFooter />
     </div>
   );
 }
